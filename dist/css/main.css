@@ -1,0 +1,33 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  background-color: aqua;
+}
+
+.header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 1rem;
+}
+
+.content-container {
+  display: flex;
+  justify-content: space-between;
+  margin: 2rem;
+}
+
+.projects ul {
+  list-style: none;
+  display: flex;
+  justify-content: space-between;
+  font-size: 2rem;
+}
+
+.task ul {
+  list-style: none;
+  display: flex;
+  justify-content: space-between;
+  font-size: 2rem;
+}
