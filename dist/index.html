@@ -38,12 +38,14 @@
       </section>
     </main> -->
 
+    <h1 class="title-main">todo list</h1>
+
     <div class="all-tasks">
       <h2 class="task-list-title">My Projects</h2>
       <ul class="task-list">
-        <li class="active-list">Default</li>
-        <li>Work</li>
-        <li>Grocery</li>
+        <li class="active-list list-name">Default</li>
+        <li class="list-name">Work</li>
+        <li class="list-name">Grocery</li>
       </ul>
 
       <form action="">
@@ -53,7 +55,7 @@
           placeholder="Enter your project"
           aria-label="new list name"
         />
-        <button class="btn list" aria-label="create new list">+</button>
+        <button class="btn create" aria-label="create new list">+</button>
       </form>
     </div>
 
@@ -107,39 +109,61 @@
 
         <div class="new-task-creator">
           <form action="">
-            <input
-              type="text"
-              class="new list"
-              placeholder="Enter your project"
-              aria-label="new list name"
-            />
             <div>
-              <label for="title">title</label>
-              <input type="text" name="" id="title" />
-            </div>
-            <div>
-              <label for="description">description</label>
-              <input type="text" id="description" />
-            </div>
-            <div>
-              <label for="date">dueDate</label>
-              <input type="date" name="" id="date" />
+              <input
+                type="text"
+                class="new list"
+                placeholder="Enter your task"
+                aria-label="new task name"
+              />
+              <div>
+                <label for="title"></label>
+                <input
+                  type="text"
+                  name=""
+                  id="title"
+                  placeholder="Enter title"
+                  class="new"
+                />
+              </div>
+              <div>
+                <label for="description"></label>
+                <input
+                  type="text"
+                  id="description"
+                  placeholder="Description"
+                  class="new"
+                />
+              </div>
+              <div>
+                <label for="date"></label>
+                <input
+                  type="date"
+                  name=""
+                  id="date"
+                  placeholder="select date"
+                  class="new"
+                />
+              </div>
+
+              <div class="col-sm-12 col-md-4 form-group">
+                <select class="custom-select new" required>
+                  <option value="" selected>Priority</option>
+                  <option value="1">Low</option>
+                  <option value="2">Medium</option>
+                  <option value="3">High</option>
+                </select>
+              </div>
             </div>
 
-            <div class="col-sm-12 col-md-4 form-group">
-              <select class="custom-select" required>
-                <option value="" selected>Priority</option>
-                <option value="1">Low</option>
-                <option value="2">Medium</option>
-                <option value="3">High</option>
-              </select>
-            </div>
-
-            <button class="btn list" aria-label="create new list">+</button>
+            <button class="btn create" aria-label="create new task">+</button>
           </form>
         </div>
 
-        <div class="delete-stuff"></div>
+        <div class="delete-stuff">
+          <button class="btn delete">Clear completed task</button>
+          <button class="btn delete">Delete list</button>
+        </div>
       </div>
     </div>
 
