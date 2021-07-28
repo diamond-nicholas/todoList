@@ -1,4 +1,3 @@
-// import myBtn from "./app";
-// import "./styles.css";
+import render from "./app";
 
-// document.body.appendChild(myBtn());
+render();
