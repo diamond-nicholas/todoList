@@ -65,28 +65,16 @@
             <label for="priority">priority</label>
           </div>
           <!-- task 1 -->
-          <div class="task">
-            <input type="checkbox" id="task-2" />
-            <label for="task-2"
-              ><span class="custom-checkbox"></span>record todolist video</label
-            >
-            <input type="hidden" id="title" />
-            <label for="title">title</label>
-            <input type="hidden" name="" id="description" />
-            <label for="description">description</label>
-            <input type="hidden" id="dueDate" />
-            <label for="dueDate">dueDate</label>
-            <input type="hidden" id="priority" />
-            <label for="priority">priority</label>
-          </div>
+
           <!-- task 2 -->
         </div>
 
         <div class="new-task-creator">
-          <form action="">
+          <form action="" data-new-task-form>
             <div>
               <input
                 type="text"
+                data-new-task-input
                 class="new list"
                 placeholder="Enter your task"
                 aria-label="new task name"
@@ -150,5 +138,6 @@
       integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
       crossorigin="anonymous"
     ></script>
+    <template id="task-template"> </template>
   </body>
 </html>
