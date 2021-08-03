@@ -9,7 +9,7 @@ const listTitleElement = document.querySelector("[data-list-title]");
 const listCountElement = document.querySelector("[data-list-count]");
 const taskContainer = document.querySelector("[data-tasks]");
 
-const taskTemplate = document.getElementById("task-template");
+// const taskTemplate = document.getElementById("task-template");
 
 const newTaskForm = document.querySelector("[data-new-task-form]");
 
@@ -19,19 +19,15 @@ const clearCompleteTasksButton = document.querySelector(
   "[data-clear-complete-tasks-button]"
 );
 
+const newListTitle = document.querySelector("[data-new-title-input]");
+const newListDesc = document.querySelector("[data-new-desc-input]");
+const newListDate = document.querySelector("[data-new-date-input]");
+
 const LOCAL_STORAGE_LIST_KEY = "task.lists";
 const LOCAL_STORAGE_SELECTED_LIST_ID_KEY = "task.selectedListId";
 
 let lists = JSON.parse(localStorage.getItem(LOCAL_STORAGE_LIST_KEY)) || [];
 let selectedListId = localStorage.getItem(LOCAL_STORAGE_SELECTED_LIST_ID_KEY);
-
-const createList = (topic) => {
-  return {
-    id: Date.now().toString(),
-    topic,
-    tasks: [],
-  };
-};
 
 const clearElement = (element) => {
   while (element.firstChild) {
@@ -68,7 +64,7 @@ const renderTasks = (selectedList) => {
     checkbox.checked = task.complete;
     const label = taskElement.querySelector("label");
     label.htmlFor = task.id;
-    label.append(task.topic);
+    label.append(task.title, task.topic, task.desc, task.date);
     taskContainer.appendChild(taskElement);
     console.log(checkbox);
   });
@@ -109,7 +105,8 @@ newListForm.addEventListener("submit", (e) => {
   e.preventDefault();
   const listName = newListInput.value;
   if (listName == null || listName === "") return;
-  const list = createList(listName);
+  const list = new createList(listName);
+  // const list = createList(listName);
   newListInput.value = null;
   lists.push(list);
   saveAndRender();
@@ -118,21 +115,31 @@ newListForm.addEventListener("submit", (e) => {
 newTaskForm.addEventListener("submit", (e) => {
   e.preventDefault();
   const taskName = newTaskInput.value;
-  if (taskName == null || taskName === "") return;
-  const task = createTask(taskName);
+  const titleName = newListTitle.value;
+  const descName = newListDesc.value;
+  const dateName = newListDate.value;
+  if (
+    taskName == null ||
+    taskName === "" ||
+    titleName == null ||
+    titleName === "" ||
+    descName == null ||
+    descName === "" ||
+    dateName == null ||
+    dateName === ""
+  )
+    return;
+  // const task = createTask(taskName);
+  const task = new createTask(taskName, titleName, descName, dateName);
   newTaskInput.value = null;
+  newListTitle.value = null;
+  newListDesc.value = null;
+  newListDate.value = null;
   const selectedList = lists.find((list) => list.id === selectedListId);
   selectedList.tasks.push(task);
   saveAndRender();
+  // console.log(task);
 });
-
-const createTask = (topic) => {
-  return {
-    id: Date.now().toString(),
-    topic,
-    complete: false,
-  };
-};
 
 listsContainer.addEventListener("click", (e) => {
   if (e.target.tagName.toLowerCase() === "li") {
@@ -164,5 +171,20 @@ deleteListButton.addEventListener("click", (e) => {
   selectedListId = null;
   saveAndRender();
 });
+
+function createList(topic) {
+  this.topic = topic;
+  this.id = Date.now().toString();
+  this.tasks = [];
+}
+
+function createTask(topic, title, desc, date) {
+  this.topic = topic;
+  this.title = title;
+  this.desc = desc;
+  this.date = date;
+  this.id = Date.now().toString();
+  this.complete = false;
+}
 
 export default render;
