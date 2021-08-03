@@ -64,21 +64,11 @@
             <input type="hidden" id="priority" />
             <label for="priority">priority</label>
           </div>
-          <!-- task 1 -->
-
-          <!-- task 2 -->
         </div>
 
         <div class="new-task-creator">
           <form action="" data-new-task-form>
             <div>
-              <input
-                type="text"
-                data-new-task-input
-                class="new list"
-                placeholder="Enter your task"
-                aria-label="new task name"
-              />
               <div>
                 <label for="title"></label>
                 <input
@@ -86,7 +76,7 @@
                   data-new-title-input
                   name=""
                   id="title"
-                  placeholder="Enter title"
+                  placeholder="Enter task title"
                   class="new"
                 />
               </div>
@@ -113,7 +103,7 @@
               </div>
 
               <div class="col-sm-12 col-md-4 form-group">
-                <select class="custom-select new">
+                <select class="custom-select new" data-new-priority-input>
                   <!-- <option value="" selected>Priority</option> -->
                   <option value="1">Low</option>
                   <option value="2">Medium</option>

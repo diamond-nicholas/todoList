@@ -14,7 +14,7 @@ const taskContainer = document.querySelector("[data-tasks]");
 const newTaskForm = document.querySelector("[data-new-task-form]");
 
 const newTaskInput = document.querySelector("[data-new-task-input]");
-
+const newPrioInput = document.querySelector("[data-new-priority-input]");
 const clearCompleteTasksButton = document.querySelector(
   "[data-clear-complete-tasks-button]"
 );
@@ -64,9 +64,8 @@ const renderTasks = (selectedList) => {
     checkbox.checked = task.complete;
     const label = taskElement.querySelector("label");
     label.htmlFor = task.id;
-    label.append(task.title, task.topic, task.desc, task.date);
+    label.append(task.title, task.desc, task.date, task.priority);
     taskContainer.appendChild(taskElement);
-    console.log(checkbox);
   });
 };
 
@@ -106,7 +105,6 @@ newListForm.addEventListener("submit", (e) => {
   const listName = newListInput.value;
   if (listName == null || listName === "") return;
   const list = new createList(listName);
-  // const list = createList(listName);
   newListInput.value = null;
   lists.push(list);
   saveAndRender();
@@ -114,31 +112,29 @@ newListForm.addEventListener("submit", (e) => {
 
 newTaskForm.addEventListener("submit", (e) => {
   e.preventDefault();
-  const taskName = newTaskInput.value;
   const titleName = newListTitle.value;
   const descName = newListDesc.value;
   const dateName = newListDate.value;
+  const prioName = newPrioInput.options[newPrioInput.selectedIndex].text;
   if (
-    taskName == null ||
-    taskName === "" ||
     titleName == null ||
     titleName === "" ||
     descName == null ||
     descName === "" ||
     dateName == null ||
-    dateName === ""
+    dateName === "" ||
+    prioName == null ||
+    prioName === ""
   )
     return;
-  // const task = createTask(taskName);
-  const task = new createTask(taskName, titleName, descName, dateName);
-  newTaskInput.value = null;
+  const task = new createTask(titleName, descName, dateName, prioName);
   newListTitle.value = null;
   newListDesc.value = null;
   newListDate.value = null;
+  newPrioInput.options[newPrioInput.selectedIndex].value = null;
   const selectedList = lists.find((list) => list.id === selectedListId);
   selectedList.tasks.push(task);
   saveAndRender();
-  // console.log(task);
 });
 
 listsContainer.addEventListener("click", (e) => {
@@ -178,11 +174,11 @@ function createList(topic) {
   this.tasks = [];
 }
 
-function createTask(topic, title, desc, date) {
-  this.topic = topic;
+function createTask(title, desc, date, priority) {
   this.title = title;
   this.desc = desc;
   this.date = date;
+  this.priority = priority;
   this.id = Date.now().toString();
   this.complete = false;
 }
