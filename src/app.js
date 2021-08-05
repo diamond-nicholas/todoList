@@ -1,19 +1,23 @@
-const listsContainer = document.querySelector("[data-lists]");
-const newListForm = document.querySelector("[data-new-list-form]");
-const newListInput = document.querySelector("[data-new-list-input]");
-const deleteListButton = document.querySelector("[data-delete-list-button]");
+/* eslint-disable quotes */
+/* eslint-disable curly */
+/* eslint-disable comma-dangle */
+/* eslint-disable operator-linebreak */
+/* eslint-disable no-unused-vars */
+/* eslint-disable no-use-before-define */
+/* eslint-disable new-cap */
 const listDisplayContainer = document.querySelector(
   "[data-list-display-container]"
 );
 const listTitleElement = document.querySelector("[data-list-title]");
+const newListForm = document.querySelector("[data-new-list-form]");
+const newListInput = document.querySelector("[data-new-list-input]");
+const deleteListButton = document.querySelector("[data-delete-list-button]");
+
 const listCountElement = document.querySelector("[data-list-count]");
 const taskContainer = document.querySelector("[data-tasks]");
-
-// const taskTemplate = document.getElementById("task-template");
-
+const listsContainer = document.querySelector("[data-lists]");
 const newTaskForm = document.querySelector("[data-new-task-form]");
 
-const newTaskInput = document.querySelector("[data-new-task-input]");
 const newPrioInput = document.querySelector("[data-new-priority-input]");
 const clearCompleteTasksButton = document.querySelector(
   "[data-clear-complete-tasks-button]"
@@ -126,6 +130,7 @@ newTaskForm.addEventListener("submit", (e) => {
     prioName == null ||
     prioName === ""
   )
+    // eslint-disable-next-line nonblock-statement-body-position
     return;
   const task = new createTask(titleName, descName, dateName, prioName);
   newListTitle.value = null;
@@ -163,7 +168,7 @@ clearCompleteTasksButton.addEventListener("click", (e) => {
 });
 
 deleteListButton.addEventListener("click", (e) => {
-  lists = lists.filter((list) => list.id != selectedListId);
+  lists = lists.filter((list) => list.id !== selectedListId);
   selectedListId = null;
   saveAndRender();
 });
