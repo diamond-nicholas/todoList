@@ -25,9 +25,9 @@
     <div class="all-tasks">
       <h2 class="task-list-title">My Projects</h2>
       <ul class="task-list test" data-lists>
-        <li class="active-list list-name">Default</li>
-        <li class="list-name">Work</li>
-        <li class="list-name">Grocery</li>
+        <li class="active-list list-name"></li>
+        <li class="list-name"></li>
+        <li class="list-name"></li>
       </ul>
 
       <form action="" data-new-list-form>
@@ -42,27 +42,25 @@
       </form>
     </div>
 
-    <div class="todo-list" data-list-display-container>
+    <div class="todo-list data-list" data-list-display-container>
       <div class="todo-header">
-        <h2 class="list-title" data-list-title>Default</h2>
-        <p class="task-count" data-list-count>2 tasks remaining</p>
+        <h2 class="list-title" data-list-title></h2>
+        <p class="task-count" data-list-count></p>
       </div>
 
       <div class="todo-body">
         <div class="tasks" data-tasks>
           <div class="task">
-            <input type="checkbox" id="task-1" />
-            <label for="task-1"
-              ><span class="custom-checkbox"></span>record todolist video</label
-            >
+            <!-- <input type="checkbox" id="task-1" /> -->
+            <label for="task-1"><span class="custom-checkbox"></span></label>
             <input type="hidden" id="title" />
-            <label for="title">title</label>
+            <label for="title">Enter your task</label>
             <input type="hidden" name="" id="description" />
-            <label for="description">description</label>
+            <label for="description"></label>
             <input type="hidden" id="dueDate" />
-            <label for="dueDate">dueDate</label>
+            <label for="dueDate"></label>
             <input type="hidden" id="priority" />
-            <label for="priority">priority</label>
+            <label for="priority"></label>
           </div>
         </div>
 
@@ -117,6 +115,7 @@
         </div>
 
         <div class="delete-stuff">
+          <button class="btn delete" data-edit-task-button>Edit todo</button>
           <button class="btn delete" data-clear-complete-tasks-button>
             Clear completed task
           </button>

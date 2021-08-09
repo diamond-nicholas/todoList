@@ -2,85 +2,17 @@
 /* eslint-disable curly */
 /* eslint-disable comma-dangle */
 /* eslint-disable operator-linebreak */
-/* eslint-disable no-unused-vars */
-/* eslint-disable no-use-before-define */
 /* eslint-disable new-cap */
-const listDisplayContainer = document.querySelector(
-  "[data-list-display-container]"
+
+import renderTasks from "./todo";
+import * as myDom from "./dom";
+import clearElement from "./utilis";
+
+let lists =
+  JSON.parse(localStorage.getItem(myDom.LOCAL_STORAGE_LIST_KEY)) || [];
+let selectedListId = localStorage.getItem(
+  myDom.LOCAL_STORAGE_SELECTED_LIST_ID_KEY
 );
-const listTitleElement = document.querySelector("[data-list-title]");
-const newListForm = document.querySelector("[data-new-list-form]");
-const newListInput = document.querySelector("[data-new-list-input]");
-const deleteListButton = document.querySelector("[data-delete-list-button]");
-
-const listCountElement = document.querySelector("[data-list-count]");
-const taskContainer = document.querySelector("[data-tasks]");
-const listsContainer = document.querySelector("[data-lists]");
-const newTaskForm = document.querySelector("[data-new-task-form]");
-
-const newPrioInput = document.querySelector("[data-new-priority-input]");
-const clearCompleteTasksButton = document.querySelector(
-  "[data-clear-complete-tasks-button]"
-);
-
-const newListTitle = document.querySelector("[data-new-title-input]");
-const newListDesc = document.querySelector("[data-new-desc-input]");
-const newListDate = document.querySelector("[data-new-date-input]");
-
-const LOCAL_STORAGE_LIST_KEY = "task.lists";
-const LOCAL_STORAGE_SELECTED_LIST_ID_KEY = "task.selectedListId";
-
-let lists = JSON.parse(localStorage.getItem(LOCAL_STORAGE_LIST_KEY)) || [];
-let selectedListId = localStorage.getItem(LOCAL_STORAGE_SELECTED_LIST_ID_KEY);
-
-const clearElement = (element) => {
-  while (element.firstChild) {
-    element.removeChild(element.firstChild);
-  }
-};
-
-const render = () => {
-  clearElement(listsContainer);
-  renderList();
-  const selectedList = lists.find((list) => list.id === selectedListId);
-  if (selectedListId == null) {
-    listDisplayContainer.style.display = "none";
-  } else {
-    listDisplayContainer.style.display = "";
-    listTitleElement.innerText = selectedList.topic;
-    renderTaskCount(selectedList);
-    clearElement(taskContainer);
-    renderTasks(selectedList);
-  }
-};
-
-const renderTasks = (selectedList) => {
-  selectedList.tasks.forEach((task) => {
-    const taskElement = document.createElement("div");
-    taskElement.innerHTML = `
- <div class="task">
-        <input type="checkbox" />
-        <label><span class="custom-checkbox"></span></label>
-      </div>
-`;
-    const checkbox = taskElement.querySelector("input");
-    checkbox.id = task.id;
-    checkbox.checked = task.complete;
-    const label = taskElement.querySelector("label");
-    label.htmlFor = task.id;
-    label.append(task.title, task.desc, task.date, task.priority);
-    taskContainer.appendChild(taskElement);
-  });
-};
-
-const renderTaskCount = (selectedList) => {
-  const incompleteTaskCount = selectedList.tasks.filter(
-    (task) => !task.complete
-  ).length;
-  const taskString = incompleteTaskCount === 1 ? "task" : "tasks";
-  listCountElement.innerText = `${incompleteTaskCount} ${taskString} remaining`;
-};
-
 const renderList = () => {
   lists.forEach((list) => {
     const listElement = document.createElement("li");
@@ -90,88 +22,43 @@ const renderList = () => {
     if (list.id === selectedListId) {
       listElement.classList.add("active-list");
     }
-    listsContainer.appendChild(listElement);
+    myDom.listsContainer.appendChild(listElement);
   });
+};
+const renderTaskCount = (selectedList) => {
+  const incompleteTaskCount = selectedList.tasks.filter(
+    (task) => !task.complete
+  ).length;
+  const taskString = incompleteTaskCount === 1 ? "task" : "tasks";
+  myDom.listCountElement.innerText = `${incompleteTaskCount} ${taskString} remaining`;
+};
+const render = () => {
+  clearElement(myDom.listsContainer);
+  renderList();
+  const selectedList = lists.find((list) => list.id === selectedListId);
+  if (selectedListId == null) {
+    myDom.listDisplayContainer.style.display = "none";
+  } else {
+    myDom.listDisplayContainer.style.display = "";
+    myDom.listTitleElement.innerText = selectedList.topic;
+    renderTaskCount(selectedList);
+    clearElement(myDom.taskContainer);
+    renderTasks(selectedList);
+  }
 };
 
 const saveToLocal = () => {
-  localStorage.setItem(LOCAL_STORAGE_LIST_KEY, JSON.stringify(lists));
-  localStorage.setItem(LOCAL_STORAGE_SELECTED_LIST_ID_KEY, selectedListId);
+  localStorage.setItem(myDom.LOCAL_STORAGE_LIST_KEY, JSON.stringify(lists));
+  localStorage.setItem(
+    myDom.LOCAL_STORAGE_SELECTED_LIST_ID_KEY,
+    selectedListId
+  );
 };
 
 const saveAndRender = () => {
   saveToLocal();
   render();
 };
-
-newListForm.addEventListener("submit", (e) => {
-  e.preventDefault();
-  const listName = newListInput.value;
-  if (listName == null || listName === "") return;
-  const list = new createList(listName);
-  newListInput.value = null;
-  lists.push(list);
-  saveAndRender();
-});
-
-newTaskForm.addEventListener("submit", (e) => {
-  e.preventDefault();
-  const titleName = newListTitle.value;
-  const descName = newListDesc.value;
-  const dateName = newListDate.value;
-  const prioName = newPrioInput.options[newPrioInput.selectedIndex].text;
-  if (
-    titleName == null ||
-    titleName === "" ||
-    descName == null ||
-    descName === "" ||
-    dateName == null ||
-    dateName === "" ||
-    prioName == null ||
-    prioName === ""
-  )
-    // eslint-disable-next-line nonblock-statement-body-position
-    return;
-  const task = new createTask(titleName, descName, dateName, prioName);
-  newListTitle.value = null;
-  newListDesc.value = null;
-  newListDate.value = null;
-  newPrioInput.options[newPrioInput.selectedIndex].value = null;
-  const selectedList = lists.find((list) => list.id === selectedListId);
-  selectedList.tasks.push(task);
-  saveAndRender();
-});
-
-listsContainer.addEventListener("click", (e) => {
-  if (e.target.tagName.toLowerCase() === "li") {
-    selectedListId = e.target.dataset.listId;
-    saveAndRender();
-  }
-});
-
-taskContainer.addEventListener("click", (e) => {
-  if (e.target.tagName.toLowerCase() === "input") {
-    const selectedList = lists.find((list) => list.id === selectedListId);
-    const selectedTask = selectedList.tasks.find(
-      (task) => task.id === e.target.id
-    );
-    selectedTask.complete = e.target.checked;
-    saveToLocal();
-    renderTaskCount(selectedList);
-  }
-});
-
-clearCompleteTasksButton.addEventListener("click", (e) => {
-  const selectedList = lists.find((list) => list.id === selectedListId);
-  selectedList.tasks = selectedList.tasks.filter((task) => !task.complete);
-  saveAndRender();
-});
-
-deleteListButton.addEventListener("click", (e) => {
-  lists = lists.filter((list) => list.id !== selectedListId);
-  selectedListId = null;
-  saveAndRender();
-});
 
 function createList(topic) {
   this.topic = topic;
@@ -187,5 +74,91 @@ function createTask(title, desc, date, priority) {
   this.id = Date.now().toString();
   this.complete = false;
 }
+
+myDom.newListForm.addEventListener("submit", (e) => {
+  e.preventDefault();
+  const listName = myDom.newListInput.value;
+  if (listName == null || listName === "") return;
+  const list = new createList(listName);
+  myDom.newListInput.value = null;
+  lists.push(list);
+  saveAndRender();
+});
+
+myDom.newTaskForm.addEventListener("submit", (e) => {
+  e.preventDefault();
+  const titleName = myDom.newListTitle.value;
+  const descName = myDom.newListDesc.value;
+  const dateName = myDom.newListDate.value;
+  const prioName =
+    myDom.newPrioInput.options[myDom.newPrioInput.selectedIndex].text;
+  if (
+    titleName == null ||
+    titleName === "" ||
+    descName == null ||
+    descName === "" ||
+    dateName == null ||
+    dateName === "" ||
+    prioName == null ||
+    prioName === ""
+  )
+    // eslint-disable-next-line nonblock-statement-body-position
+    return;
+  const task = new createTask(titleName, descName, dateName, prioName);
+  myDom.newListTitle.value = null;
+  myDom.newListDesc.value = null;
+  myDom.newListDate.value = null;
+  myDom.newPrioInput.options[myDom.newPrioInput.selectedIndex].value = null;
+  const selectedList = lists.find((list) => list.id === selectedListId);
+  selectedList.tasks.push(task);
+  saveAndRender();
+});
+
+myDom.listsContainer.addEventListener("click", (e) => {
+  if (e.target.tagName.toLowerCase() === "li") {
+    selectedListId = e.target.dataset.listId;
+    saveAndRender();
+  }
+});
+
+myDom.taskContainer.addEventListener("click", (e) => {
+  if (e.target.tagName.toLowerCase() === "input") {
+    const selectedList = lists.find((list) => list.id === selectedListId);
+    const selectedTask = selectedList.tasks.find(
+      (task) => task.id === e.target.id
+    );
+    selectedTask.complete = e.target.checked;
+    saveToLocal();
+    renderTaskCount(selectedList);
+  }
+});
+
+myDom.editTask.addEventListener("click", () => {
+  const selectedList = lists.find((list) => list.id === selectedListId);
+  const editData = selectedList.tasks.filter((task) => task.complete);
+  const editTitle = editData[0].title;
+  const editDesc = editData[0].desc;
+  const editDate = editData[0].date;
+  const editPriority = editData[0].priority;
+  myDom.newListTitle.value = editTitle;
+  myDom.newListDesc.value = editDesc;
+  myDom.newListDate.value = editDate;
+  myDom.newPrioInput.options[myDom.newPrioInput.selectedIndex].text =
+    editPriority;
+  selectedList.tasks = selectedList.tasks.filter((task) => !task.complete);
+  saveAndRender();
+});
+
+myDom.clearCompleteTasksButton.addEventListener("click", () => {
+  const selectedList = lists.find((list) => list.id === selectedListId);
+  selectedList.tasks = selectedList.tasks.filter((task) => !task.complete);
+  saveAndRender();
+});
+
+myDom.deleteListButton.addEventListener("click", () => {
+  lists = lists.filter((list) => list.id !== selectedListId);
+  selectedListId = null;
+  saveAndRender();
+});
 
 export default render;
