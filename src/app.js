@@ -8,8 +8,13 @@ import renderTasks from "./todo";
 import * as myDom from "./dom";
 import clearElement from "./utilis";
 
-let lists =
-  JSON.parse(localStorage.getItem(myDom.LOCAL_STORAGE_LIST_KEY)) || [];
+let lists = JSON.parse(localStorage.getItem(myDom.LOCAL_STORAGE_LIST_KEY)) || [
+  {
+    topic: "Default",
+    id: "12899",
+    tasks: [],
+  },
+];
 let selectedListId = localStorage.getItem(
   myDom.LOCAL_STORAGE_SELECTED_LIST_ID_KEY
 );
