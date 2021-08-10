@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="./css/main.css" />
+    <link
+      rel="stylesheet"
+      href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
+      integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p"
+      crossorigin="anonymous"
+    />
+    <title>todoList</title>
+  </head>
+  <body>
+    <h1 class="title-main">Daily Task Tracker</h1>
+
+    <div class="all-tasks">
+      <h2 class="task-list-title">My Projects</h2>
+      <ul class="task-list test" data-lists>
+        <li class="active-list list-name"></li>
+        <li class="list-name"></li>
+        <li class="list-name"></li>
+      </ul>
+
+      <form action="" data-new-list-form>
+        <input
+          type="text"
+          class="new list"
+          data-new-list-input
+          placeholder="Enter your project"
+          aria-label="new list name"
+        />
+        <button class="btn create" aria-label="create new list">+</button>
+      </form>
+    </div>
+
+    <div class="todo-list data-list" data-list-display-container>
+      <div class="todo-header">
+        <h2 class="list-title" data-list-title></h2>
+        <p class="task-count" data-list-count></p>
+      </div>
+
+      <div class="todo-body">
+        <div class="tasks" data-tasks>
+          <div class="task">
+            <!-- <input type="checkbox" id="task-1" /> -->
+            <label for="task-1"><span class="custom-checkbox"></span></label>
+            <input type="hidden" id="title" />
+            <label for="title">Enter your task</label>
+            <input type="hidden" name="" id="description" />
+            <label for="description"></label>
+            <input type="hidden" id="dueDate" />
+            <label for="dueDate"></label>
+            <input type="hidden" id="priority" />
+            <label for="priority"></label>
+          </div>
+        </div>
+
+        <div class="new-task-creator">
+          <form action="" data-new-task-form>
+            <div>
+              <div>
+                <label for="title"></label>
+                <input
+                  type="text"
+                  data-new-title-input
+                  name=""
+                  id="title"
+                  placeholder="Enter task title"
+                  class="new"
+                />
+              </div>
+              <div>
+                <label for="description"></label>
+                <input
+                  type="text"
+                  data-new-desc-input
+                  id="description"
+                  placeholder="Description"
+                  class="new"
+                />
+              </div>
+              <div>
+                <label for="date"></label>
+                <input
+                  type="date"
+                  data-new-date-input
+                  name=""
+                  id="date"
+                  placeholder="select date"
+                  class="new"
+                />
+              </div>
+
+              <div class="col-sm-12 col-md-4 form-group">
+                <select class="custom-select new" data-new-priority-input>
+                  <!-- <option value="" selected>Priority</option> -->
+                  <option value="1">Low</option>
+                  <option value="2">Medium</option>
+                  <option value="3">High</option>
+                </select>
+              </div>
+            </div>
+
+            <button class="btn create" aria-label="create new task">+</button>
+          </form>
+        </div>
+
+        <div class="delete-stuff">
+          <button class="btn delete" data-edit-task-button>Edit todo</button>
+          <button class="btn delete" data-clear-complete-tasks-button>
+            Clear completed task
+          </button>
+          <button class="btn delete" data-delete-list-button>
+            Delete list
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <script src="./main.js"></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+      crossorigin="anonymous"
+    ></script>
+    <template id="task-template"> </template>
+  </body>
+</html>
