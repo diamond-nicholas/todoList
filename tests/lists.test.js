@@ -1,6 +1,4 @@
-// import Createtask from '../app';
-import Createlist from '../list';
-import '../dom';
+import Createlist from '../src/list';
 
 describe('test for constructor', () => {
   const task = new Createlist('write code');
