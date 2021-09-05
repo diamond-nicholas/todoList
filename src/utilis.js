@@ -4,5 +4,4 @@ const clearElement = (element) => {
   }
 };
 
-module.exports = clearElement;
 export default clearElement;
